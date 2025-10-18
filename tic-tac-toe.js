@@ -1,4 +1,3 @@
-// tic-tac-toe.js
 
 window.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('#board div');
@@ -7,6 +6,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let currentPlayer = 'X';
   let gameOver = false;
 
+  // --- Initialize squares ---
   squares.forEach(square => {
     square.classList.add('square');
 
@@ -33,32 +33,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // --- Hover effect ---
     square.addEventListener('mouseenter', () => {
-      if (!gameOver && square.textContent === '') {
+      if (!gameOver && square.textContent === '') { // Only show hover if game is not over and square is empty
         square.classList.add('hover');
       }
     });
-
-    square.addEventListener('mouseleave', () => {
+// --- Remove hover effect ---
+    square.addEventListener('mouseleave', () => {  // Remove hover effect
       square.classList.remove('hover');
     });
   });
 
   // --- Restart button ---
   newGameBtn.addEventListener('click', () => {
-    squares.forEach(square => {
-      square.textContent = '';
-      square.classList.remove('X', 'O', 'hover');
-    });
+    squares.forEach(square => {     
 
+      square.textContent = '';
+      square.classList.remove('X', 'O', 'hover');       // Clear square content and classes
+    });
+        // Reset game state
     currentPlayer = 'X';
     gameOver = false;
-    status.textContent = 'Move your mouse over a square and click to play an X or an O.';
+    status.textContent = 'Move your mouse over a square and click to play an X or an O.';// Reset status message
     status.classList.remove('you-won');
   });
 
   // --- Helper: Check for winning combinations ---
   function checkWinner(player) {
     const combos = [
+        // Horizontal, Vertical, Diagonal
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -68,9 +70,9 @@ window.addEventListener('DOMContentLoaded', () => {
       [0, 4, 8],
       [2, 4, 6]
     ];
-
+// Check if any winning combination is met
     return combos.some(combo =>
-      combo.every(index => squares[index].textContent === player)
+      combo.every(index => squares[index].textContent === player)       // Check if all squares in the combo match the current player
     );
   }
 });
